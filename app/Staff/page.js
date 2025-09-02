@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify';
 
 
-const page = () => {
+const Page = () => {
   const [id, setid] = useState('')
   const [pass, setpass] = useState('');
   const [flag, setflag] = useState(true)
@@ -89,4 +89,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
