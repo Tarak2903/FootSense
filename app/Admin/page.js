@@ -5,7 +5,7 @@ import Footer from '@/Components/Footer'
 import { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation'
-const page = () => {
+const Page = () => {
   const [id, setid] = useState('');
   const [password, setpassword] = useState('');
   const route = useRouter();
@@ -70,4 +70,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
