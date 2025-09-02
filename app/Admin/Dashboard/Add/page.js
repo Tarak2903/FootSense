@@ -17,7 +17,7 @@ const Page = () => {
     setpassword(e.target.value)
   }
   const handleclick = async () => {
-    const res = await fetch('http://localhost:5174/auth/signup', {
+    const res = await fetch('https://footsense.onrender.com/auth/signup', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
