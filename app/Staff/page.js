@@ -20,7 +20,7 @@ const page = () => {
   const route = useRouter();
   const handleClick = async () => {
       
-    let res = await fetch('http://localhost:5174/auth/Signin', {
+    let res = await fetch('https://footsense.onrender.com/auth/Signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
