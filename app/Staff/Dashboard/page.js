@@ -50,7 +50,7 @@ const Page = () => {
 
   const handleData = async () => {
     const Email = watch('Email')
-    const res = await fetch(`http://localhost:5174/api/logfile/g?Email=${encodeURIComponent(Email)}`, { method: 'GET' })
+    const res = await fetch(`https://footsense.onrender.com/api/logfile/g?Email=${encodeURIComponent(Email)}`, { method: 'GET' })
     const data = await res.json()
 
     setLmean(data[0].lmean)
@@ -80,7 +80,7 @@ const Page = () => {
     const fd = new FormData()
     fd.append('file', file)
 
-    const res = await fetch(`http://localhost:5174/api/logfile/l?name=${encodeURIComponent(Email)}`, {
+    const res = await fetch(`https://footsense.onrender.com/api/logfile/l?name=${encodeURIComponent(Email)}`, {
       method: "POST",
       body: fd
     })
@@ -132,7 +132,7 @@ const Page = () => {
       });
       return
     }
-    const res = await fetch('http://localhost:5174/api/logfile/lg', {
+    const res = await fetch('https://footsense.onrender.com/api/logfile/lg', {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ Name, Age, Height, Weight, Email })
