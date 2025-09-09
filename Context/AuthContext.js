@@ -24,5 +24,11 @@ export const AuthProvider = ({ children }) => {
             setloading(false)
         }
     }
+    const value ={
+        isAuthenticated,
+        loading,
+        checkAuthStatus
+    }
 
+    return<AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
