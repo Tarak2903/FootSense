@@ -4,8 +4,8 @@ const User = require('../models/user');
 const router = express.Router();
 const bcrypt = require('bcryptjs')
 const cookieparser = require('cookie-parser');
-const useAuth=require('../../Context/AuthContext')
-const {checkAuthStatus} =useAuth();
+
+
 // MiddleWare function
 const verifyToken = async (req, res, next) => {
     const token = req.cookies.tarakcookie;
@@ -52,7 +52,6 @@ router.post('/Signin', async (req, res) => {
             sameSite: 'lax',
             secure: false
         })
-        await checkAuthStatus();
         console.log("Hello puneet bhai")
         res.json({ success: true });
     } catch (err) {
