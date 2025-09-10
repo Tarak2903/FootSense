@@ -24,9 +24,7 @@ const verifyToken = async (req, res, next) => {
     catch (err) {
         return res.status(401).json({ success: false, message: err.message })
     }
-    finally{
-        next();
-    }
+   
 }
 
 // Signin Route
@@ -46,11 +44,11 @@ router.post('/Signin', async (req, res) => {
             email
         },
             process.env.JWT_SECRET,
-            { expiresIn: "1h" }
+            { expiresIn: "24h" }
         )
 
         res.cookie('tarakcookie', token, {
-            maxAge: 1 * 1000 * 60 * 60,
+            maxAge: 24 * 1000 * 60 * 60,
             httpOnly: true,
             sameSite: 'lax',
             secure: false
