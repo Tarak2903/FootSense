@@ -5,18 +5,18 @@ const router = express.Router();
 const bcrypt = require('bcryptjs')
 const cookieparser = require('cookie-parser');
 
-
-
+import { useAuth } from '@/Context/AuthContext';
+const {checkAuthStatus} =useAuth();
 // MiddleWare function
 const verifyToken = async (req, res, next) => {
     const token = req.cookies.tarakcookie;
-
+    console.log("Hello")
     if (!token) {
         return res.status(401).json({ success: false })
     }
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        console.log("Hello")
+        
         req.email = decoded;
         next();
 
@@ -53,6 +53,7 @@ router.post('/Signin', async (req, res) => {
             sameSite: 'lax',
             secure: false
         })
+        await checkAuthStatus();
         console.log("Hello puneet bhai")
         res.json({ success: true });
     } catch (err) {
