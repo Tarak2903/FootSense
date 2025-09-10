@@ -5,7 +5,9 @@ const router = express.Router();
 const bcrypt = require('bcryptjs')
 const cookieparser = require('cookie-parser');
 
-import { useAuth } from '../Context/AuthContext';
+import { useAuth } from '../../Context/AuthContext';
+
+import {useAuth} from '..'
 const {checkAuthStatus} =useAuth();
 // MiddleWare function
 const verifyToken = async (req, res, next) => {
