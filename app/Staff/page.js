@@ -5,8 +5,8 @@ import Footer from '@/Components/Footer'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify';
-
-
+import { useAuth } from '@/Context/AuthContext'
+import RouteGuard from '@/Guard/RouteGuard'
 const Page = () => {
   const [id, setid] = useState('')
   const [pass, setpass] = useState('');
@@ -25,7 +25,8 @@ const Page = () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email: id, password: pass })
+      body: JSON.stringify({ email: id, password: pass }),
+      credentials:'include'
     })
     const data = await res.json();
     if (data.success) {
@@ -63,6 +64,7 @@ const Page = () => {
         theme="dark"
 
       />
+      
       <Navbar />
       <div className="top-0 z-[-2] min-h-screen w-full bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px] text-white">
         <div className="flex w-[40vw] h-[60vh]   m-auto justify-center items-center ">
@@ -84,6 +86,7 @@ const Page = () => {
         </div>
       </div>
       <Footer />
+      
     </>
 
   )

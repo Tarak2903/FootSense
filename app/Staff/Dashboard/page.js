@@ -8,6 +8,8 @@ import validator from 'validator'
 import { ToastContainer, toast } from 'react-toastify';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import RouteGuard from '@/Guard/RouteGuard';
+import { useAuth } from '@/Context/AuthContext'
 
 const Page = () => {
   const [file, setFile] = useState(null)
@@ -206,6 +208,7 @@ const Page = () => {
   return (
     <>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick={false} rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
+      <RouteGuard>
       <Navbar />
       <div className="min-h-screen bg-gradient-to-b from-[#000000] to-[#0a0a23] py-10 px-4 text-white flex justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-[1400px] w-full">
@@ -322,7 +325,7 @@ const Page = () => {
   </div>
 </div>
 
-      
+      </RouteGuard>
 
     </>
   )

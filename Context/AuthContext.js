@@ -1,7 +1,15 @@
-"use client "
+"use client"
 import { useContext, createContext, useState, useEffect } from "react"
-import { Router, useRouter } from "next/router";
+import {  useRouter } from "next/navigation";
 const AuthContext = createContext();
+
+export const useAuth=()=>{
+        const context=useContext(AuthContext)
+        if(!context){
+            throw new Error("Use Auth must be used within AuthProivder")
+        }
+        return context
+}
 
 export const AuthProvider = ({ children }) => {
 
@@ -10,12 +18,12 @@ export const AuthProvider = ({ children }) => {
     const router = useRouter();
 
     const checkAuthStatus = async () => {
-        const data = await fetch('http://localhost:3000/verification', {
+        const data = await fetch('https://footsense.onrender.com/auth/Verify', {
             credentials: 'include',
             method: 'GET'
         })
         const response = await data.json();
-        if (data.success) {
+        if (response.success) {
             setisAuthenticated(true)
             setloading(false)
         }
@@ -24,6 +32,9 @@ export const AuthProvider = ({ children }) => {
             setloading(false)
         }
     }
+      useEffect(() => {
+        checkAuthStatus();
+    }, []);
     const value ={
         isAuthenticated,
         loading,

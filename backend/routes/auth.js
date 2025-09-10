@@ -2,38 +2,59 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const router = express.Router();
-const bcrypt=require('bcryptjs')
-const cookieparser=require('cookie-parser');
+const bcrypt = require('bcryptjs')
+const cookieparser = require('cookie-parser');
+
+
+
+// MiddleWare function
+const verifyToken = async (req, res, next) => {
+    const token = req.cookies.tarakcookie;
+
+    if (!token) {
+        return res.status(401).json({ success: false })
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        console.log("Hello")
+        req.email = decoded;
+        next();
+
+    }
+    catch (err) {
+        return res.status(401).json({ success: false, message: err.message })
+    }
+    finally{
+        next();
+    }
+}
+
 // Signin Route
 router.post('/Signin', async (req, res) => {
     const { email, password } = req.body;
     try {
         const existing = await User.findOne({ email });
-        if (!existing ) {  
+        if (!existing) {
             return res.status(401).json({ success: false, message: "User doesnt exist" });
         }
-        const isValid= await bcrypt.compare(password,existing.password)
+        const isValid = await bcrypt.compare(password, existing.password)
 
-        if(!isValid){
-            return res.status(401).json({success:false,message:"Invalid password"});    
+        if (!isValid) {
+            return res.status(401).json({ success: false, message: "Invalid password" });
         }
-        res.json({ success: true});
-    } catch (err) {
-        res.status(500).send({ message: err.message });
-    }
-}); 
+        const token = jwt.sign({
+            email
+        },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+        )
 
-// Signup Route
-router.post('/signup', async (req, res) => {
-    const {email, password } = req.body;
-    try {
-            const existing = await User.findOne({ email });
-        if (existing) {
-            return res.json({ success: false, message: "User already exists" });
-        }
-        const hashedPassword= await bcrypt.hash(password,10);
-        const newUser = new User({ email, password:hashedPassword });
-        await newUser.save();
+        res.cookie('tarakcookie', token, {
+            maxAge: 1 * 1000 * 60 * 60,
+            httpOnly: true,
+            sameSite: 'lax',
+            secure: false
+        })
 
         res.json({ success: true });
     } catch (err) {
@@ -41,6 +62,28 @@ router.post('/signup', async (req, res) => {
     }
 });
 
+// Signup Route
+
+router.post('/signup', async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const existing = await User.findOne({ email });
+        if (existing) {
+            return res.json({ success: false, message: "User already exists" });
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ email, password: hashedPassword });
+        await newUser.save();
+
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
+});
+ //Middleware apply
+ router.get('/Verify',verifyToken,async (req,res)=>{
+    return res.status(200).json({success:true,message:"Verified"});
+ })
 
 
 // User revoke
