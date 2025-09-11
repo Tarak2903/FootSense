@@ -52,7 +52,7 @@ const Page = () => {
 
   const handleData = async () => {
     const Email = watch('Email')
-    const res = await fetch(`https://footsense.onrender.com/api/logfile/g?Email=${encodeURIComponent(Email)}`, { method: 'GET' })
+    const res = await fetch(`http://localhost:5174/api/logfile/g?Email=${encodeURIComponent(Email)}`, { method: 'GET' })
     const data = await res.json()
 
     setLmean(data[0].lmean)

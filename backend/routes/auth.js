@@ -9,7 +9,7 @@ const cookieparser = require('cookie-parser');
 // MiddleWare function
 const verifyToken = async (req, res, next) => {
     const token = req.cookies.tarakcookie;
-    console.log("Hello")
+    
     if (!token) {
         return res.status(401).json({ success: false })
     }

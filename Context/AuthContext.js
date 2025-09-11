@@ -14,32 +14,41 @@ export const useAuth=()=>{
 export const AuthProvider = ({ children }) => {
 
     const [isAuthenticated, setisAuthenticated] = useState(false);
-    const [loading, setloading] = useState(true)
+    const [loading, setloading] = useState(false)
     const router = useRouter();
 
     const checkAuthStatus = async () => {
-        const data = await fetch('https://footsense.onrender.com/auth/Verify', {
+        alert("checkAuthStatus bhi chala hai")
+        try{
+        const data = await fetch('http://localhost:5174/auth/Verify', {
             credentials: 'include',
             method: 'GET'
         })
         const response = await data.json();
         if (response.success) {
+            console.log("Verify to chala hai bhai")
             setisAuthenticated(true)
             setloading(false)
         }
         else {
             setisAuthenticated(false);
             setloading(false)
+        }}
+        catch(err){
+            alert(err.message);
         }
     }
+
       useEffect(() => {
         checkAuthStatus();
     }, []);
     const value ={
         isAuthenticated,
         loading,
-        checkAuthStatus
+        checkAuthStatus,
+
     }
+    
 
     return<AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

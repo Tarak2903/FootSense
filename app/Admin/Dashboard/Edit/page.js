@@ -15,7 +15,7 @@ const route=useRouter();
     const [flag2, setflag2] = useState(false)
     const handleClick = async ({ id }) => {
         
-        const res = await fetch('https://footsense.onrender.com/api/auth/check', {
+        const res = await fetch('http://localhost:5174/api/auth/check', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

@@ -11,7 +11,7 @@ const Page = () => {
   }
 
   const handleclick = async () => {
-    const res = await fetch('https://footsense.onrender.com/auth/revoke', {
+    const res = await fetch('http://localhost:5174/auth/revoke', {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
